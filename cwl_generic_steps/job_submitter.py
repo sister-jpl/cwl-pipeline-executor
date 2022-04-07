@@ -26,17 +26,42 @@ def create_execute_payload(execute_info):
     return request
 
 
-def wps_execute(job_info):
-    headers = {"Content-type: application/xml"}
-    payload = create_execute_payload(execute_info=job_info)
-    response = requests.request("POST", api_dps_url, headers=headers, data=payload)
-    print(response.text.encode('utf8'))
+def parse_execute_response(resp):
+    return
 
+def wps_execute(job_info):
+    job_id = None
+    try:
+        # TODO: change this to maappy
+        headers = {"Content-type: application/xml"}
+        payload = create_execute_payload(execute_info=job_info)
+        response = requests.request("POST", api_dps_url, headers=headers, data=payload)
+    except Exception as ex:
+        raise()
+    try:
+        # parse response and find job id
+        job_id = parse_execute_response(response)
+    except Exception as ex:
+        raise()
+    return job_id
+
+
+def wps_poll_for_status(job_id):
+    # TODO: Implement new maap py handler for polling and use it here
+    return
+
+def wps_get_result(job_id):
+    # TODO: Call maap py get result
+    # check if product generated
+    # if nothing then return None
+    # else return URL(s)
+    return
 
 def main():
     # identify inputs - name of algorithm:version, inputs dictionary
     # parse / read in inputs
     # create the dictionary for execution
+    job_info = dict()
     """
         {
             "job_type":"",
@@ -49,7 +74,14 @@ def main():
     """
     # call execute
     job_id = wps_execute(job_info)
-    wps_poll_for_job_status(job_id)
+    job_status = wps_poll_for_status(job_id)
+    if job_status == "successful":
+        # get job's result
+        result = wps_get_result(job_id)
+    elif job_status in ["failed", "dismissed"]:
+        raise()
+    # formulate output of cwl step
+    return output
 
 
 if __name__ == "__main__":
