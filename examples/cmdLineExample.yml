@@ -1,0 +1,11 @@
+cwlVersion: v1.0
+class: CommandLineTool
+baseCommand:
+  - python
+  - /Users/shah/Desktop/Development/geospec/cwl-pipeline-executor/examples/echo.py
+inputs:
+  message:
+    type: string
+    inputBinding:
+      position: 1
+outputs: []
