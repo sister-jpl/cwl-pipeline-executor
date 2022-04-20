@@ -1,0 +1,22 @@
+cwlVersion: v1.0
+class: Workflow
+inputs:
+  context: File
+
+outputs:
+  output_context:
+    type: File
+    outputSource: compile/context
+
+steps:
+  untar:
+    run: pge-cwl.yml
+    in:
+      input_context: context
+    out: [context]
+
+  compile:
+    run: pge-cwl.yml
+    in:
+      input_context: untar/context
+    out: [context]
