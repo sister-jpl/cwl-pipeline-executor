@@ -1,0 +1,25 @@
+cwlVersion: v1.0
+class: CommandLineTool
+baseCommand:
+  - python
+  - /Users/shah/Desktop/Development/geospec/cwl-pipeline-executor/workflow/pge_prep.py
+inputs:
+  workflow_context:
+    type: File
+    inputBinding:
+      position: 1
+      prefix: --workflow_context
+  input_context:
+    type: File?
+    inputBinding:
+      prefix: --input_context
+  algorithm_key:
+    type: string
+    inputBinding:
+      position: 3
+      prefix: --algorithm_key
+outputs:
+  context:
+    type: File
+    outputBinding:
+      glob: output_context.json

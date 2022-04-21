@@ -2,7 +2,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 baseCommand:
   - python
-  - /Users/shah/Desktop/Development/geospec/cwl-pipeline-executor/workflow/run_pge.py
+  - /Users/shah/Desktop/Development/geospec/cwl-pipeline-executor/workflow/post_pge.py
 inputs:
   input_context:
     type: File
@@ -13,4 +13,4 @@ outputs:
   context:
     type: File
     outputBinding:
-      glob: output_context.json
+      glob: post_pge_output_context.json

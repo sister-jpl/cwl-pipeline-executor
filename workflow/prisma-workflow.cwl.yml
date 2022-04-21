@@ -1,0 +1,51 @@
+cwlVersion: v1.0
+class: Workflow
+inputs:
+  workflow_context: File
+  isofit_algorithm_key: string
+  hytools_algorithm_key: string
+
+outputs:
+  output_context:
+    type: File
+    outputSource: post-hytools-pge/context
+
+steps:
+  isofit-prepare-inputs:
+    run: pge-prep.yml
+    in:
+      workflow_context: workflow_context
+      algorithm_key: isofit_algorithm_key
+    out: [context]
+
+  isofit-pge:
+    run: pge-cwl.yml
+    in:
+      input_context: isofit-prepare-inputs/context
+    out: [context]
+
+  post-isofit-pge:
+    run: post-pge.yml
+    in:
+      input_context: isofit-pge/context
+    out: [context]
+
+  hytools-prepare-inputs:
+    run: pge-prep.yml
+    in:
+      workflow_context: workflow_context
+      input_context: post-isofit-pge/context
+      algorithm_key: hytools_algorithm_key
+    out: [context]
+
+  hytools-pge:
+    run: pge-cwl.yml
+    in:
+      input_context: hytools-prepare-inputs/context
+    out: [context]
+
+  post-hytools-pge:
+    run: post-pge.yml
+    in:
+      input_context: hytools-pge/context
+    out: [context]

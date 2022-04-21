@@ -1,1 +1,28 @@
-{"algoid":  "imgspec"}
+{
+  "isofit": {
+    "algorithm_id": "isofit_ubuntu",
+    "version": "v2.9.0",
+    "queue": "sister-job_worker-32gb",
+    "params": {
+      "l1_granule":null,
+      "surface_reflectance_spectra":"surface_reflectance_spectra",
+      "vegetation_reflectance_spectra":"vegetation_reflectance_spectra",
+      "water_reflectance_spectra":"water_reflectance_spectra",
+      "snow_and_liquids_reflectance_spectra":"snow_and_liquids_reflectance_spectra",
+      "radiance_factors_file":"radiance_factors_file"
+    },
+    "output_filter": ""
+  },
+  "hytools": {
+    "algorithm_id": "hytools_ubuntu",
+    "version": "1.2.0",
+    "queue": "sister-job_worker-12gb",
+    "params": {
+      "reflectance_granules":"reflectance_granules[i]",
+      "obs_granules":"obs_granules[i]",
+      "trait_models_repo_url":"trait_models_repo_url",
+      "image_correct_config":"{}",
+      "trait_estimate_config":"trait_estimate_config"
+    }
+  }
+}

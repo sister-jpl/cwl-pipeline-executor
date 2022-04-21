@@ -3,10 +3,10 @@ import argparse
 
 
 def main(context):
-    print(f"Running algorithm with params {json.dumps(context, indent=1)}")
+    print(f"Filtering outputs {json.dumps(context, indent=1)}")
+    # TODO RE match
     output_json = {"products": ["some-url.txt", "some-tar-file.tar"]}
-    output_json.update({"output_filter": context.get("output_filter", "")})
-    json.dump(output_json, open("output_context.json", 'w'), indent=1)
+    json.dump(output_json, open("post_pge_output_context.json", 'w'), indent=1)
 
 
 if __name__ == '__main__':
