@@ -1,13 +1,15 @@
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand:
-  - python
-  - ${PWD}/pge_prep.py
+baseCommand: python
 inputs:
+  pge_prep_filepath:
+    type: string
+    inputBinding:
+      position: 1
   workflow_context:
     type: File
     inputBinding:
-      position: 1
+      position: 2
       prefix: --workflow_context
   input_context:
     type: File?
