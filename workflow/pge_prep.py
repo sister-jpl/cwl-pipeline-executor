@@ -9,8 +9,12 @@ def main(workflow_context, context, algorithm_key):
         output_json = algorithm
         params = algorithm.get("params", {})
         if context:
-            products = context.get("products", [])
-            params.update({"input_files": products})
+            # if not first step of workflow, pass necessary files to next step
+            for param in context:
+                if param == "products":
+                    products = context.get("products", [])
+                else:
+                    params.update({param: context.get(param)})
         output_json.update({"params": params})
         json.dump(output_json, open("output_context.json", 'w'), indent=1)
         return
@@ -25,6 +29,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     global_context_file = args.workflow_context
     context = None
+    # input context will be empty for the first PGE in the workflow. It is
     if args.input_context:
         input_context_file = args.input_context
         context = json.load(open(input_context_file, 'r'))

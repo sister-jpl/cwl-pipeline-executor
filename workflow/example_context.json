@@ -11,7 +11,9 @@
       "snow_and_liquids_reflectance_spectra":"snow_and_liquids_reflectance_spectra",
       "radiance_factors_file":"radiance_factors_file"
     },
-    "output_filter": ""
+    "output_filter": {
+      "reflectance_granules": "*rfl*tar.gz"
+    }
   },
   "hytools": {
     "algorithm_id": "hytools_ubuntu",

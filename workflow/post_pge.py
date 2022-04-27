@@ -1,11 +1,36 @@
 import json
 import argparse
+import fnmatch
+
+
+def match_products_to_params(context):
+    output_json = dict()
+    output_json["products"] = context.get("products")
+    products = context.get("products")
+    regex_filters = context.get("output_filter", None)
+    if regex_filters:
+        for param_name, match_pattern in regex_filters.items():
+            for prod in products:
+                if fnmatch.fnmatch(prod, match_pattern):
+                    output_json[param_name] = prod
+    return output_json
 
 
 def main(context):
+    """
+    Example context:
+    {
+     "products": [
+      "some-url.txt",
+      "some-tar-file.tar"
+     ],
+     "output_filter": {"file":"*txt", "param": "*tar"}
+    }
+    :param context:
+    :return:
+    """
     print(f"Filtering outputs {json.dumps(context, indent=1)}")
-    # TODO RE match
-    output_json = {"products": ["some-url.txt", "some-tar-file.tar"]}
+    output_json = match_products_to_params(context)
     json.dump(output_json, open("post_pge_output_context.json", 'w'), indent=1)
 
 
