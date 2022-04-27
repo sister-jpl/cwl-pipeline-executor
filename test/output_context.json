@@ -1,0 +1,18 @@
+{"algorithm_id": "isofit_ubuntu",
+  "output_filter": {"reflectance_granules": "*rfl*.tar.gz"},
+  "params": {
+    "cmr_metadata": {},
+    "publish_to_cmr":false,
+    "l1_granule": "https://geospec-dataset-bucket-dev.s3.us-west-2.amazonaws.com/anonymous/dps_output/sister-prisma_ubuntu/0.3/2022/03/29/17/08/11/029711/PRS_20210302180507_20210302180511_0001.tar.gz",
+    "radiance_factors_file": "https://raw.githubusercontent.com/EnSpec/sister/master/data/prisma/radiance_factors/PRISMA_20200721104249_20200721104253_0001_radiance_factors.txt",
+    "snow_and_liquids_reflectance_spectra": "https://ecosis.org/api/package/emit-manually-adjusted-snow-and-liquids-reflectance-spectra/export",
+    "surface_reflectance_spectra": "https://ecosis.org/api/package/emit-manually-adjusted-surface-reflectance-spectra/export",
+    "vegetation_reflectance_spectra": "https://ecosis.org/api/package/emit-manually-adjusted-vegetation-reflectance-spectra/export",
+    "water_reflectance_spectra": "https://ecosis.org/api/package/emit-manually-adjusted-water-reflectance-spectra/export",
+    "segmentation_size": 200,
+    "n_cores": 32
+  },
+  "queue": "geospec-job_worker-32gb",
+  "username": "malarout",
+  "version": "v2.9.1"
+}

@@ -13,6 +13,7 @@ def main(workflow_context, context, algorithm_key):
             for param in context:
                 params.update({param: context.get(param)})
         output_json.update({"params": params})
+        print("Output Context: \n{}".format(json.dumps(output_json)))
         json.dump(output_json, open("output_context.json", 'w'), indent=1)
         return output_json
     raise KeyError(f"Specified Algorithm {algorithm_key} not found in params")

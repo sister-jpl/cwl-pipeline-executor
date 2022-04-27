@@ -51,11 +51,11 @@ def job_execute(job_info):
             **inputs
         )
         logging.info("Job submission response:\n{}".format(job))
+        if job.response_code != 200:
+            raise RuntimeError("Unsuccessful job submission. \n{}".format(job))
         return job
-    except RuntimeError as err:
-        raise ("Runtime error while submitting job. {}".format(err))
     except Exception as ex:
-        raise("Caught Exception submitting job. {}".format(ex))
+        raise RuntimeError("Caught Exception submitting job. {}".format(ex))
 
 
 def main(context):
@@ -67,7 +67,7 @@ def main(context):
     try:
         # call execute
         job = job_execute(context)
-        job.waitForJobCompletion()
+        job.wait_for_completion()
         if job.status.lower() == "succeeded":
             # get job's result
             job.getJobResult()
