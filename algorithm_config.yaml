@@ -21,6 +21,6 @@ inputs:
 # remove below this line if no inputs
 # rename and set algorithm input names accordingly
   - name: isofit_config
-    type: context
+    type: config
   - name: hytools_config
-    type: context
+    type: config
