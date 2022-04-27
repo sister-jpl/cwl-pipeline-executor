@@ -1,6 +1,6 @@
 import json
 import argparse
-# from maap.maap import MAAP
+from maap.maap import MAAP
 import os
 import json
 import logging
@@ -11,7 +11,7 @@ logging.basicConfig(format=log_format, level=logging.INFO)
 logger = logging.getLogger(os.path.splitext(os.path.basename(__file__))[0])
 
 
-# maap = MAAP(_host="api.imgspec.org")
+maap = MAAP(maap_host="api.imgspec.org")
 
 
 def job_execute(job_info):

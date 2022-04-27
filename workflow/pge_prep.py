@@ -11,10 +11,7 @@ def main(workflow_context, context, algorithm_key):
         if context:
             # if not first step of workflow, pass necessary files to next step
             for param in context:
-                if param == "products":
-                    products = context.get("products", [])
-                else:
-                    params.update({param: context.get(param)})
+                params.update({param: context.get(param)})
         output_json.update({"params": params})
         json.dump(output_json, open("output_context.json", 'w'), indent=1)
         return
