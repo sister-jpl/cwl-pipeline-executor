@@ -1,13 +1,15 @@
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand:
-  - python
-  - ${PWD}/post_pge.py
+baseCommand: python
 inputs:
+  post_pge_filepath:
+    type: string
+    inputBinding:
+      position: 1
   input_context:
     type: File
     inputBinding:
-      position: 1
+      position: 2
       prefix: --input_context
 outputs:
   context:

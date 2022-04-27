@@ -1,5 +1,6 @@
 workflow_context:
   class: File
   path: example_context.json
+pge-prep-filepath: pge-prep.py
 isofit_algorithm_key: isofit
 hytools_algorithm_key: hytools

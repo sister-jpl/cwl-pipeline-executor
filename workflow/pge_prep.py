@@ -3,7 +3,7 @@ import argparse
 
 
 def main(workflow_context, context, algorithm_key):
-    print(json.dumps(context))
+    print(json.dumps(workflow_context))
     algorithm = workflow_context.get(algorithm_key, None)
     if algorithm:
         output_json = algorithm
@@ -14,7 +14,7 @@ def main(workflow_context, context, algorithm_key):
                 params.update({param: context.get(param)})
         output_json.update({"params": params})
         json.dump(output_json, open("output_context.json", 'w'), indent=1)
-        return
+        return output_json
     raise KeyError(f"Specified Algorithm {algorithm_key} not found in params")
 
 
