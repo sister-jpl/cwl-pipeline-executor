@@ -18,7 +18,7 @@ inputs:
       prefix: --input_context
   maap_cfg:
     type: string
-    default: "/maap-py/"
+    default: "/app/maap-py/"
 outputs:
   context:
     type: File
