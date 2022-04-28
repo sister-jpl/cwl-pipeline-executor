@@ -5,14 +5,14 @@ import fnmatch
 
 def match_products_to_params(context):
     output_json = dict()
-    output_json["products"] = context.get("products")
-    products = context.get("products")
+    products = context.get("products", [])
     regex_filters = context.get("output_filter", None)
     if regex_filters:
         for param_name, match_pattern in regex_filters.items():
             for prod in products:
-                if fnmatch.fnmatch(prod, match_pattern):
-                    output_json[param_name] = prod
+                if prod.startswith("s3://"):
+                    if fnmatch.fnmatch(prod, match_pattern):
+                        output_json[param_name] = prod
     return output_json
 
 

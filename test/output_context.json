@@ -1,5 +1,5 @@
 {"algorithm_id": "isofit_ubuntu",
-  "output_filter": {"reflectance_granules": "*rfl*.tar.gz"},
+  "output_filter": {"reflectance_granules": "*ang*.tar.gz"},
   "params": {
     "cmr_metadata": {},
     "publish_to_cmr":false,

@@ -81,7 +81,7 @@ def main(context):
             else:
                 raise RuntimeError("Job was not successfully completed. Status of job is {}.".format(job.status.lower()))
         # Create output json of job result
-        output_json = {"products": [outputs]}
+        output_json = {"products": outputs}
         # output_json = {"products": ["f130612t01p00r05_rfl.tar.gz"]}
         output_json.update({"output_filter": context.get("output_filter", "")})
         json.dump(output_json, open("output_context.json", 'w'), indent=1)
