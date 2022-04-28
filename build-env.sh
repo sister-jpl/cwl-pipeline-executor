@@ -1,7 +1,6 @@
 #!/bin/bash
 
-mamba create -n cwl-pipeline -c conda-forge -y cwltool
-
+mamba install -c conda-forge -y cwltool
 pushd /app
 git clone --single-branch system-test-8 https://gitlab.com/geospec/maap-py.git
 pushd maap-py
