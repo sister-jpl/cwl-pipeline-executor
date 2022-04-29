@@ -1,5 +1,7 @@
 import json
 import argparse
+import time
+
 from maap.maap import MAAP
 import os
 import json
@@ -67,10 +69,13 @@ def main(context):
     try:
         # call execute
         job = job_execute(context)
+        # Add sleep since the job is not instantly available to query and the API returns a Deleted Status
+        # Wait for ES to commit the document
+        time.sleep(10)
         job.wait_for_completion()
         if job.status.lower() == "succeeded":
             # get job's result
-            job.getJobResult()
+            job.retrieve_result()
             outputs = job.outputs
             # check if any products were created
             if len(outputs) == 0:
