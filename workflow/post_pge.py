@@ -31,6 +31,7 @@ def main(context):
     """
     print(f"Filtering outputs {json.dumps(context, indent=1)}")
     output_json = match_products_to_params(context)
+    print(f"Output context from post pge {json.dumps(output_json, indent=1)}")
     json.dump(output_json, open("post_pge_output_context.json", 'w'), indent=1)
 
 
