@@ -1,0 +1,36 @@
+cwlVersion: v1.0
+class: Workflow
+inputs:
+  pge_prep_filepath: string
+  workflow_context: File
+  step_key: string
+  run_pge_filepath: string
+  post_pge_filepath: string
+
+outputs:
+  context:
+    type: File
+    outputSource: post-pge/context
+
+steps:
+  pge-prepare-inputs:
+    run: pge-prep.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      algorithm_key: step_key
+    out: [ context ]
+
+  run-pge:
+    run: pge-cwl.yml
+    in:
+      run_pge_filepath: run_pge_filepath
+      input_context: pge-prepare-inputs/context
+    out: [ context ]
+
+  post-pge:
+    run: post-pge.yml
+    in:
+      post_pge_filepath: post_pge_filepath
+      input_context: run-pge/context
+    out: [ context ]

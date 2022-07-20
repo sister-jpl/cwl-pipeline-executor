@@ -1,0 +1,63 @@
+cwlVersion: v1.0
+class: Workflow
+inputs:
+  workflow_context: File
+  l1_preprocess_algorithm_key: string
+  l2_reflectance_algorithm_key: string
+  l2_resample_algorithm_key: string
+  l2_reflectance_correction_algorithm_key: string
+  pge_prep_filepath: string
+  run_pge_filepath: string
+  post_pge_filepath: string
+
+outputs:
+  output_context:
+    type: File
+    outputSource: l2_reflectance_correction-workflow/context
+
+requirements:
+  SubworkflowFeatureRequirement: {}
+
+steps:
+  l1_preprocess-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key: l1_preprocess_algorithm_key
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+    out: [context]
+
+  l2_reflectance-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key: l2_reflectance_algorithm_key
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+      input_context: l1_preprocess-workflow/context
+    out: [context]
+
+  l2_resample-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key: l2_resample_algorithm_key
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+      input_context: l2_reflectance-workflow/context
+    out: [ context ]
+
+  l2_reflectance_correction-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key: l2_reflectance_correction_algorithm_key
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+      input_context: [l2_resample-workflow/context, l1_preprocess-workflow/context]
+    out: [ context ]
