@@ -7,12 +7,12 @@ inputs:
     inputBinding:
       position: 1
   input_context:
-    type: File
+    type: File[]
     inputBinding:
       position: 2
       prefix: --input_context
 outputs:
   context:
-    type: File
+    type: File[]
     outputBinding:
       glob: post_pge_output_context.json

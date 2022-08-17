@@ -9,14 +9,16 @@ inputs:
   pge_prep_filepath: string
   run_pge_filepath: string
   post_pge_filepath: string
+  input_context: File[]?
 
 outputs:
   output_context:
-    type: File
+    type: File[]
     outputSource: l2_reflectance_correction-workflow/context
 
 requirements:
   SubworkflowFeatureRequirement: {}
+  MultipleInputFeatureRequirement: {}
 
 steps:
   l1_preprocess-workflow:
@@ -25,6 +27,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key: l1_preprocess_algorithm_key
+      input_context: input_context
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
     out: [context]
@@ -37,7 +40,8 @@ steps:
       step_key: l2_reflectance_algorithm_key
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
-      input_context: l1_preprocess-workflow/context
+      input_context:
+        source: [l1_preprocess-workflow/context]
     out: [context]
 
   l2_resample-workflow:
@@ -48,7 +52,8 @@ steps:
       step_key: l2_resample_algorithm_key
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
-      input_context: l2_reflectance-workflow/context
+      input_context:
+        source: [l2_reflectance-workflow/context]
     out: [ context ]
 
   l2_reflectance_correction-workflow:
@@ -59,5 +64,7 @@ steps:
       step_key: l2_reflectance_correction_algorithm_key
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
-      input_context: [l2_resample-workflow/context, l1_preprocess-workflow/context]
+      input_context:
+        source: [l2_resample-workflow/context, l1_preprocess-workflow/context]
+        linkMerge: merge_flattened
     out: [ context ]

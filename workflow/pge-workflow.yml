@@ -6,10 +6,11 @@ inputs:
   step_key: string
   run_pge_filepath: string
   post_pge_filepath: string
+  input_context: File[]?
 
 outputs:
   context:
-    type: File
+    type: File[]
     outputSource: post-pge/context
 
 steps:

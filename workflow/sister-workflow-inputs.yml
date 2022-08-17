@@ -1,4 +1,0 @@
-workflow_context: File
-l1_preprocess_algorithm_key: l1_preprocess
-l2_reflectance_algorithm_key: l2_reflectance
-l2_resample_algorithm_key: l2_resample

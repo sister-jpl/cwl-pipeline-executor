@@ -12,7 +12,7 @@ inputs:
       position: 2
       prefix: --workflow_context
   input_context:
-    type: File?
+    type: File[]?
     inputBinding:
       prefix: --input_context
       position: 4
@@ -23,6 +23,6 @@ inputs:
       prefix: --algorithm_key
 outputs:
   context:
-    type: File
+    type: File[]
     outputBinding:
       glob: output_context.json
