@@ -23,6 +23,6 @@ inputs:
       prefix: --algorithm_key
 outputs:
   context:
-    type: File[]
+    type: File
     outputBinding:
-      glob: output_context.json
+      glob: "*_output_context.json"

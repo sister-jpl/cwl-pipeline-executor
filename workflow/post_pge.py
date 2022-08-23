@@ -29,16 +29,21 @@ def main(context):
     :param context:
     :return:
     """
-    print(f"Filtering outputs {json.dumps(context, indent=1)}")
-    output_json = match_products_to_params(context)
-    print(f"Output context from post pge {json.dumps(output_json, indent=1)}")
-    json.dump(output_json, open("post_pge_output_context.json", 'w'), indent=1)
+    # print(f"Filtering outputs {json.dumps(context, indent=1)}")
+    # output_json = context
+    # print(f"Output context from post pge {json.dumps(output_json, indent=1)}")
+    # json.dump(output_json, open("post_pge_output_context.json", 'w'), indent=1)
+    print("Currently post PGE step is a pass through")
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run PGE step')
     parser.add_argument("--input_context", dest="input_context", required=True)
+    parser.add_argument("--algorithm_key", dest="algorithm_key", required=False, default="na")
     args = parser.parse_args()
     input_context_file = args.input_context
+    algorithm_key = args.algorithm_key
     context = json.load(open(input_context_file, 'r'))
     main(context)
+    json.dump(context, open(f"{algorithm_key}_post_pge_output_context.json", 'w'), indent=1)
+

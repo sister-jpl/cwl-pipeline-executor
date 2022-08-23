@@ -20,6 +20,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       algorithm_key: step_key
+      input_context: input_context
     out: [ context ]
 
   run-pge:
@@ -34,4 +35,5 @@ steps:
     in:
       post_pge_filepath: post_pge_filepath
       input_context: run-pge/context
+      algorithm_key: step_key
     out: [ context ]

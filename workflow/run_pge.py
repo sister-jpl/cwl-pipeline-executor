@@ -13,7 +13,7 @@ logging.basicConfig(format=log_format, level=logging.INFO)
 logger = logging.getLogger(os.path.splitext(os.path.basename(__file__))[0])
 
 
-maap = MAAP(maap_host="api.imgspec.org")
+maap = MAAP(maap_host="sister-api.imgspec.org")
 
 
 def job_execute(job_info):
@@ -88,8 +88,10 @@ def main(context):
         # Create output json of job result
         output_json = {"products": outputs}
         # output_json = {"products": ["f130612t01p00r05_rfl.tar.gz"]}
-        output_json.update({"output_filter": context.get("output_filter", "")})
-        json.dump(output_json, open("output_context.json", 'w'), indent=1)
+        # output_json.update({"output_filter": context.get("output_filter", "")})
+        algo_id = context.get("algorithm_id")
+        print("Job completed, writing output", json.dumps(output_json, indent=2))
+        json.dump(output_json, open(f"{algo_id}_output_context.json", 'w'), indent=1)
     except Exception as ex:
         raise Exception("Caught Exception submitting job. {}".format(ex))
 
