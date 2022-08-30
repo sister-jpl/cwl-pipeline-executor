@@ -2,10 +2,10 @@ cwlVersion: v1.0
 class: Workflow
 inputs:
   workflow_context: File
-  l1_preprocess_algorithm_key: string
-  l2_reflectance_algorithm_key: string
-  l2_resample_algorithm_key: string
-  l2_reflectance_correction_algorithm_key: string
+  step_1_key: string
+  step_2_key: string
+  step_3_key: string
+  step_4_key: string
   pge_prep_filepath: string
   run_pge_filepath: string
   post_pge_filepath: string
@@ -26,7 +26,7 @@ steps:
     in:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
-      step_key: l1_preprocess_algorithm_key
+      step_key: step_1_key
       input_context: input_context
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
@@ -37,7 +37,7 @@ steps:
     in:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
-      step_key: l2_reflectance_algorithm_key
+      step_key: step_2_key
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
       input_context:
@@ -49,7 +49,7 @@ steps:
     in:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
-      step_key: l2_resample_algorithm_key
+      step_key: step_3_key
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
       input_context:
@@ -61,7 +61,7 @@ steps:
     in:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
-      step_key: l2_reflectance_correction_algorithm_key
+      step_key: step_4_key
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
       input_context:
