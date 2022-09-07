@@ -1,7 +1,7 @@
 # DO NOT DELETE
 
 algo_name: run_sister_workflow
-version: master
+version: dev
 environment: ubuntu
 repository_url: https://gitlab.com/geospec/cwl-pipeline-executor.git
 docker_url: mas.dit.maap-project.org/root/maap-workspaces/base_images/vanilla:dit
@@ -10,7 +10,7 @@ queue: 15GB
 
 # fill out these fields
 # explain what this algorithm does
-description:
+description: Sister Workflow
 
 build_command: cwl-pipeline-executor/build-env.sh
 # path to the wrapper script for running the algorithm

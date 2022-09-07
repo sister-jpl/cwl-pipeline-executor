@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # source activate cwl-pipeline
-set -x
+set -ex
 
 basedir=$( cd "$(dirname "$0")" ; pwd -P )
 python ${basedir}/create_workflow_inputs.py inputs.json

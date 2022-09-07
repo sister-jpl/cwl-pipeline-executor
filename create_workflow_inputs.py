@@ -13,6 +13,8 @@ def main(inputs_file):
     if workflow_config is None:
         print("No workflow config provided, will not continue")
         exit(1)
+    if isinstance(workflow_config, str):
+        workflow_config = json.loads(workflow_config)
     elif not isinstance(workflow_config, list):
         print(f"Workflow config should be a list {type(workflow_config)} provided, will not continue")
         exit(1)
