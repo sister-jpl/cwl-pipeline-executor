@@ -13,7 +13,7 @@ logging.basicConfig(format=log_format, level=logging.INFO)
 logger = logging.getLogger(os.path.splitext(os.path.basename(__file__))[0])
 
 
-maap = MAAP(maap_host="sister-api.imgspec.org")
+maap = MAAP(maap_host="10.10.2.226")
 
 
 def job_execute(job_info):
