@@ -9,7 +9,7 @@ def main(inputs_file):
     inputs = json.load(open(inputs_file, 'r'))
     workflow_inputs = {}
     # Expeting workflow_config to be a list of items
-    workflow_config = inputs.get("workflow_config")
+    workflow_config = inputs.get("config").get("workflow_config")
     if workflow_config is None:
         print("No workflow config provided, will not continue")
         exit(1)
