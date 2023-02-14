@@ -11,3 +11,7 @@ WORKFLOW_INPUTS=$(ls $PWD/workflow-inputs.yml)
 pushd ${basedir}/workflow
 cwltool sister-workflow.yml ${WORKFLOW_INPUTS}
 popd
+
+set -x
+mkdir -p output
+mv *.log output/
