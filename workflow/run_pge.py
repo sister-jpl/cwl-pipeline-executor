@@ -50,6 +50,7 @@ def job_execute(job_info):
             algo_id=algo_id,
             version=algo_version,
             queue=job_info.get("queue"),
+            dedup=job_info.get("dedup", True),
             **inputs
         )
         logging.info("Job submission response:\n{}".format(job))
@@ -82,7 +83,7 @@ def main(context):
                 logger.info("No products generated from job")
         else:
             if job.status.lower() == "failed":
-                raise RuntimeError("Job failed. Traceback:\n{}".format(job.traceback))
+                raise RuntimeError("Job failed. Traceback:\n{}".format(job))
             else:
                 raise RuntimeError("Job was not successfully completed. Status of job is {}.".format(job.status.lower()))
         # Create output json of job result

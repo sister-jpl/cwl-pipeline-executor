@@ -7,6 +7,7 @@ inputs:
   step_3_key: string
   step_4_key: string
   step_5_key: string
+  step_6_key: string
   pge_prep_filepath: string
   run_pge_filepath: string
   post_pge_filepath: string
@@ -80,4 +81,17 @@ steps:
       post_pge_filepath: post_pge_filepath
       input_context:
         source: [ l2_reflectance_correction-workflow/context ]
+    out: [ context ]
+
+  l2b_router-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key: step_6_key
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+      input_context:
+        source: [ l2_factional_cover-workflow/context, l2_reflectance_correction-workflow/context ]
+        linkMerge: merge_flattened
     out: [ context ]
