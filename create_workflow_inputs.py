@@ -8,8 +8,9 @@ def main(inputs_file):
     basedir = os.path.dirname(os.path.abspath(__file__))
     inputs = json.load(open(inputs_file, 'r'))
     workflow_inputs = {}
-    # Expeting workflow_config to be a list of items
+    # Expecting workflow_config to be a list of items
     workflow_config = inputs.get("config").get("workflow_config")
+    precondition_file = inputs.get("config").get("precondition_file")
     if workflow_config is None:
         print("No workflow config provided, will not continue")
         exit(1)
@@ -40,6 +41,9 @@ def main(inputs_file):
     workflow_inputs.update({"run_pge_filepath": run_pge_filepath})
     post_pge_filepath = os.path.join(basedir, "workflow", "post_pge.py")
     workflow_inputs.update({"post_pge_filepath": post_pge_filepath})
+    if precondition_file:
+        precondition_evaluation_path = os.path.join(basedir, "workflow", "preconditions", precondition_file)
+        workflow_inputs.update({"precondition_file": precondition_evaluation_path})
 
     workflow_inputs_file = "workflow-inputs.yml"
     yaml.dump(workflow_inputs, open(workflow_inputs_file, 'w'))

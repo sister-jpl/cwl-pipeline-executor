@@ -1,7 +1,7 @@
 # DO NOT DELETE
 
 algorithm_name: run_sister_workflow
-algorithm_version: 2.0
+algorithm_version: dev
 repository_url: https://gitlab.com/geospec/cwl-pipeline-executor.git
 docker_container_url: mas.dit.maap-project.org/root/maap-workspaces/base_images/vanilla:dit
 

@@ -1,0 +1,150 @@
+cwlVersion: v1.2
+class: Workflow
+inputs:
+  workflow_context: File
+  step_1_key: string
+  step_2_key: string
+  step_3_key: string
+  step_4_key: string
+  step_5_key: string
+  step_6_key: string
+  pge_prep_filepath: string
+  run_pge_filepath: string
+  post_pge_filepath: string
+  input_context: File[]?
+  precondition_file: string?
+
+outputs:
+  output_context:
+    type: File[]
+    outputSource:   l2_factional_cover-workflow/context
+
+requirements:
+  SubworkflowFeatureRequirement: {}
+  MultipleInputFeatureRequirement: {}
+  InlineJavascriptRequirement: {}
+
+steps:
+  l1_preprocess-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key:
+        default: "l1_preprocess"
+      input_context: input_context
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+    out: [context]
+
+  l2_reflectance-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key:
+        default: "l2_reflectance"
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+      input_context:
+        source: [l1_preprocess-workflow/context]
+    out: [context]
+
+  l2_resample-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key:
+        default: "l2_resample"
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+      input_context:
+        source: [l2_reflectance-workflow/context]
+    out: [ context ]
+
+  l2_reflectance_correction-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key:
+        default: "l2_reflectance_correction"
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+      input_context:
+        source: [l2_resample-workflow/context, l1_preprocess-workflow/context]
+        linkMerge: merge_flattened
+    out: [ context ]
+
+  l2_factional_cover-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key:
+        default: "l2_factional_cover"
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+      input_context:
+        source: [ l2_reflectance_correction-workflow/context ]
+    out: [ context ]
+
+  precondition-evaluation-workflow:
+    run: precondition-evaluation-workflow.yml
+    in:
+      workflow_context: workflow_context
+      precondition_file: precondition_file
+      input_context:
+        source: [ l2_factional_cover-workflow/context ]
+    out: [pges_to_run]
+    when: $(inputs.precondition_file != undefined)
+
+  l2_grainsize-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key:
+        default: "l2_grainsize"
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+      pges_to_run:
+        source: precondition-evaluation-workflow/pges_to_run
+      input_context:
+        source: [ l2_factional_cover-workflow/context, l2_reflectance_correction-workflow/context ]
+        linkMerge: merge_flattened
+    out: [ context ]
+    when: $(inputs.pges_to_run.includes("snow"))
+
+  aquatic-workflow:
+    run: sister-aquatic-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+      pges_to_run:
+        source: precondition-evaluation-workflow/pges_to_run
+      input_context:
+        source: [ l2_factional_cover-workflow/context, l2_reflectance_correction-workflow/context ]
+        linkMerge: merge_flattened
+    out: [ context ]
+    when: $(inputs.pges_to_run.includes("water"))
+
+  vegetation-workflow:
+    run: pge-workflow.yml
+    in:
+      pge_prep_filepath: pge_prep_filepath
+      workflow_context: workflow_context
+      step_key:
+        default: "l2_benthic_cover"
+      run_pge_filepath: run_pge_filepath
+      post_pge_filepath: post_pge_filepath
+      pges_to_run:
+        source: precondition-evaluation-workflow/pges_to_run
+      input_context:
+        source: [ l2_factional_cover-workflow/context, l2_reflectance_correction-workflow/context ]
+        linkMerge: merge_flattened
+    out: [ context ]
+    when: $(inputs.pges_to_run.includes("veg"))

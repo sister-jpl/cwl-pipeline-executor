@@ -1,0 +1,23 @@
+cwlVersion: v1.2
+class: CommandLineTool
+baseCommand: python
+arguments: [$(inputs.precondition_file)]
+inputs:
+  precondition_file:
+    type: string?
+  workflow_context:
+    type: File
+    inputBinding:
+      prefix: --workflow_context
+  input_context:
+    type: File[]?
+    inputBinding:
+      prefix: --input_context
+stdout: routing.txt
+outputs:
+  pges_to_run:
+    type: string
+    outputBinding:
+      glob: routing.txt
+      loadContents: true
+      outputEval: $(self[0].contents)

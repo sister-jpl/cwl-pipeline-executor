@@ -7,6 +7,7 @@ inputs:
   run_pge_filepath: string
   post_pge_filepath: string
   input_context: File[]?
+  pges_to_run: string?
 
 outputs:
   context:
