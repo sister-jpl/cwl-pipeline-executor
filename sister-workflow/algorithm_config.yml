@@ -17,7 +17,10 @@ disk_space: 10GB
 inputs:
 # remove below this line if no inputs
 # rename and set algorithm input names accordingly
+  positional:
+    - name: workflow_name
+      default: "sister-workflow-conditional"
   config:
     - name: workflow_config
       type: object
-      description: Worfklow config
+      description: Workflow config
