@@ -24,3 +24,8 @@ inputs:
     - name: workflow_config
       type: object
       description: Workflow config
+
+    - name: precondition_file
+      type: string
+      description: Precondition file to use
+      default: "sister-router"
