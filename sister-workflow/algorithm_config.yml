@@ -20,6 +20,7 @@ inputs:
   positional:
     - name: workflow_name
       default: "sister-workflow-conditional"
+      type: string
   config:
     - name: workflow_config
       type: object
