@@ -31,13 +31,13 @@ steps:
       post_pge_filepath: post_pge_filepath
     out: [context]
 
-  l2b_benthic_classification-workflow:
+  l2_benthic_cover-workflow:
     run: pge-workflow.yml
     in:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key:
-        default: "l2b_benthic_classification"
+        default: "l2_benthic_cover"
       input_context:
         source: [l2b_benthic_inversion-workflow/context]
       run_pge_filepath: run_pge_filepath
