@@ -26,10 +26,12 @@ def evaluate(metadata: list, snow_cover=0.5, veg_cover=0.5, min_pixels=100, soil
 
         # Vegetation biochemistry PGE
         if veg_run:
+            LOGGER.info("Adding veg to pges_to_run")
             algorithms.append("veg")
 
         # # Snow grain size PGE
         if snow_run & ("DESIS" not in meta_file_path):
+            LOGGER.info("Adding snow to pges_to_run")
             algorithms.append("snow")
 
     return algorithms
@@ -64,6 +66,7 @@ def main(args):
             input_context = json.load(open(args.input_context, 'r'))
             metadata = get_metadata(input_context.get("products", []))
             pges_to_run = evaluate(metadata=metadata, **config)
+    LOGGER.info(f"PGEs to run {pges_to_run}")
     print("".join(pges_to_run))
 
 
