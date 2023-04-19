@@ -11,7 +11,7 @@ inputs:
 outputs:
   context:
     type: File[]
-    outputSource: l2b_benthic_classification-workflow/context
+    outputSource: l2_benthic_cover-workflow/context
 
 requirements:
   SubworkflowFeatureRequirement: {}
