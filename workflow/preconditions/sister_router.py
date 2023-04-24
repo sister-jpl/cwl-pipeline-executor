@@ -21,8 +21,9 @@ def evaluate(metadata: list, snow_cover=0.5, veg_cover=0.5, min_pixels=100, soil
         with open(meta_file_path, 'r') as meta_file:
             metadata = json.load(meta_file)
 
-        snow_run = metadata['cover_percentile_counts']['soil'][str(snow_cover)] >= min_pixels
+        snow_run = metadata['cover_percentile_counts']['snow'][str(snow_cover)] >= min_pixels
         veg_run = metadata['cover_percentile_counts']['vegetation'][str(veg_cover)] >= min_pixels
+        water_run = metadata['cover_percentile_counts']['water'][str(water_cover)] >= min_pixels
 
         # Vegetation biochemistry PGE
         if veg_run:
@@ -33,6 +34,10 @@ def evaluate(metadata: list, snow_cover=0.5, veg_cover=0.5, min_pixels=100, soil
         if snow_run & ("DESIS" not in meta_file_path):
             LOGGER.info("Adding snow to pges_to_run")
             algorithms.append("snow")
+
+        if water_run:
+            LOGGER.info("Adding water to pges_to_run")
+            algorithms.append("water")
 
     return algorithms
 
