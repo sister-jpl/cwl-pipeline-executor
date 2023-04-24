@@ -138,7 +138,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key:
-        default: "l2_benthic_cover"
+        default: "l2_vegbiochem"
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
       pges_to_run:
