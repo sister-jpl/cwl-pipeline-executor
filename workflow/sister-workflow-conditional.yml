@@ -31,7 +31,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key:
-        default: "l1_preprocess"
+        default: "l1b_preprocess"
       input_context: input_context
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
@@ -43,7 +43,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key:
-        default: "l2_reflectance"
+        default: "l2a_reflectance"
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
       input_context:
@@ -56,7 +56,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key:
-        default: "l2_resample"
+        default: "l2a_resample"
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
       input_context:
@@ -69,7 +69,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key:
-        default: "l2_reflectance_correction"
+        default: "l2a_reflectance_correction"
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
       input_context:
@@ -83,7 +83,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key:
-        default: "l2_factional_cover"
+        default: "l2b_factional_cover"
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
       input_context:
@@ -106,7 +106,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key:
-        default: "l2_grainsize"
+        default: "l2b_grainsize"
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
       pges_to_run:
@@ -138,7 +138,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key:
-        default: "l2_vegbiochem"
+        default: "l2b_vegbiochem"
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
       pges_to_run:

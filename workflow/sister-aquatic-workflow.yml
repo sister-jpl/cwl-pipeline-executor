@@ -37,7 +37,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key:
-        default: "l2_benthic_cover"
+        default: "l2b_benthic_cover"
       input_context:
         source: [l2b_benthic_inversion-workflow/context]
       run_pge_filepath: run_pge_filepath
