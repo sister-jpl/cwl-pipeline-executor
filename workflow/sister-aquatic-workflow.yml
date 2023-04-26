@@ -50,7 +50,7 @@ steps:
       pge_prep_filepath: pge_prep_filepath
       workflow_context: workflow_context
       step_key:
-        default: "l2b_aquatic_pigments_inversion"
+        default: "l2b_aquatic_pigments"
       input_context: input_context
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
