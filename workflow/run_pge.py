@@ -66,7 +66,7 @@ def main(context):
     :param context:
     :return:
     """
-    print(f"Running algorithm with params {json.dumps(context, indent=1)}")
+    logger.info(f"Running algorithm with params {json.dumps(context, indent=1)}")
     try:
         # call execute
         job = job_execute(context)
@@ -74,6 +74,8 @@ def main(context):
         # Wait for ES to commit the document
         time.sleep(10)
         job.wait_for_completion()
+        job.retrieve_status()
+        logger.info(f"Completed waiting for job: {job.id} with status {job.status}")
         if job.status.lower() == "succeeded":
             # get job's result
             job.retrieve_result()
@@ -83,7 +85,19 @@ def main(context):
                 logger.info("No products generated from job")
         else:
             if job.status.lower() == "failed":
-                raise RuntimeError("Job failed. Traceback:\n{}".format(job))
+                logger.info("Received job status as failed, retrying one more time to retrieve status")
+                time.sleep(10)
+                job.retrieve_status()
+                logger.info(f"Got job: {job.id} with status {job.status}")
+                if job.status.lower() == "succeeded":
+                    # get job's result
+                    job.retrieve_result()
+                    outputs = job.outputs
+                    # check if any products were created
+                    if len(outputs) == 0:
+                        logger.info("No products generated from job")
+                else:
+                    raise RuntimeError("Job failed. Traceback:\n{}".format(job))
             else:
                 raise RuntimeError("Job was not successfully completed. Status of job is {}.".format(job.status.lower()))
         # Create output json of job result
@@ -91,10 +105,10 @@ def main(context):
         # output_json = {"products": ["f130612t01p00r05_rfl.tar.gz"]}
         # output_json.update({"output_filter": context.get("output_filter", "")})
         algo_id = context.get("algorithm_id")
-        print("Job completed, writing output", json.dumps(output_json, indent=2))
+        logger.info("Job completed, writing output", json.dumps(output_json, indent=2))
         json.dump(output_json, open(f"{algo_id}_output_context.json", 'w'), indent=1)
     except Exception as ex:
-        raise Exception("Caught Exception submitting job. {}".format(ex))
+        raise Exception("Caught Exception in processing job information. {}".format(ex))
 
 
 if __name__ == '__main__':
