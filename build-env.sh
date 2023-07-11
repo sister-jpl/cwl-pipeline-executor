@@ -2,7 +2,7 @@
 set -x
 basedir=$( cd "$(dirname "$0")" ; pwd -P )
 
-mamba create -n cwl-pipeline -c conda-forge -y cwltool nodejs awscli geopandas=0.12.2
+mamba create -n cwl-pipeline -c conda-forge -y cwltool nodejs awscli geopandas=0.12.2 unzip
 source activate cwl-pipeline
 
 # Download Coral Mask file
