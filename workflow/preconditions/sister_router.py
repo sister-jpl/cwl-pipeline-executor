@@ -5,7 +5,8 @@ import sys
 import logging
 import boto3
 import re
-
+import geopandas as gp
+from shapely.geometry import Polygon
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
@@ -36,8 +37,25 @@ def evaluate(metadata: list, snow_cover=0.5, veg_cover=0.5, min_pixels=100, soil
             algorithms.append("snow")
 
         if water_run:
-            LOGGER.info("Adding water to pges_to_run")
-            algorithms.append("water")
+            LOGGER.info("Adding aquatic pigments to pges_to_run")
+            algorithms.append("pigments")
+
+            # Create bounding box polygon
+            bbox = metadata['bounding_box']
+            bbox+=[bbox[0]]
+            bounding_polygon = Polygon(bbox)
+
+            router_dir = os.path.abspath(os.path.dirname(__file__))
+
+            coral_file = f'{router_dir}/Warm Coral Reefs.shp'
+            coral = gp.read_file(coral_file)
+
+            #Check if scene intersects coral
+            intersects = coral.intersects(bounding_polygon).sum() > 0
+
+            if intersects:
+                LOGGER.info("Adding benthic pges to pges_to_run")
+                algorithms.append("benthic")
 
     return algorithms
 
