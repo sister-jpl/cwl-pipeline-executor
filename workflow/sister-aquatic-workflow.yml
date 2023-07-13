@@ -30,6 +30,7 @@ steps:
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
     out: [context]
+    when: $(inputs.pges_to_run.includes("benthic"))
 
   l2_benthic_cover-workflow:
     run: pge-workflow.yml
@@ -43,6 +44,7 @@ steps:
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
     out: [ context ]
+    when: $(inputs.pges_to_run.includes("benthic"))
 
   l2b_aquatic_pigments_inversion-workflow:
     run: pge-workflow.yml
@@ -55,3 +57,4 @@ steps:
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
     out: [ context ]
+    when: $(inputs.pges_to_run.includes("pigments"))

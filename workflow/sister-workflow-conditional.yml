@@ -130,7 +130,6 @@ steps:
         source: [ l2_factional_cover-workflow/context, l2_reflectance_correction-workflow/context ]
         linkMerge: merge_flattened
     out: [ context ]
-    when: $(inputs.pges_to_run.includes("water"))
 
   vegetation-workflow:
     run: pge-workflow.yml
