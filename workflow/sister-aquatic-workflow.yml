@@ -29,6 +29,7 @@ steps:
       input_context: input_context
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
+      pges_to_run: pges_to_run
     out: [context]
     when: $(inputs.pges_to_run.includes("benthic"))
 
@@ -43,6 +44,7 @@ steps:
         source: [l2b_benthic_inversion-workflow/context]
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
+      pges_to_run: pges_to_run
     out: [ context ]
     when: $(inputs.pges_to_run.includes("benthic"))
 
@@ -56,5 +58,6 @@ steps:
       input_context: input_context
       run_pge_filepath: run_pge_filepath
       post_pge_filepath: post_pge_filepath
+      pges_to_run: pges_to_run
     out: [ context ]
     when: $(inputs.pges_to_run.includes("pigments"))
