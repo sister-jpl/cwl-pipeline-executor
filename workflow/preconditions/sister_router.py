@@ -21,6 +21,7 @@ def evaluate(metadata: list, snow_cover=0.5, veg_cover=0.5, min_pixels=100, soil
         LOGGER.info(f"Processing {meta_file_path}")
         with open(meta_file_path, 'r') as meta_file:
             metadata = json.load(meta_file)
+        metadata = metadata.get("properties")
 
         snow_run = metadata['cover_percentile_counts']['snow_ice'][str(snow_cover)] >= min_pixels
         veg_run = metadata['cover_percentile_counts']['vegetation'][str(veg_cover)] >= min_pixels
@@ -64,7 +65,7 @@ def get_metadata(product_locations):
     metadata = []
     for product_location in product_locations:
         dataset_name = os.path.basename(product_location)
-        metadata_file = os.path.join(product_location, f"{dataset_name}.met.json")
+        metadata_file = os.path.join(product_location, f"{dataset_name}.json")
         pattern = re.compile(r"s3:\/\/[^\/]+amazonaws.com:80\/(?P<bucket>.*?)\/(?P<key>.+FRCOV.*)")
         match = re.search(pattern, metadata_file)
         if match:
