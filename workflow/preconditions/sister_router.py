@@ -42,7 +42,7 @@ def evaluate(metadata: list, snow_cover=0.5, veg_cover=0.5, min_pixels=100, soil
             algorithms.append("pigments")
 
             # Create bounding box polygon
-            bbox = metadata['bounding_box']
+            bbox = metadata['geometry']['coordinates']['bounding_box']
             bbox+=[bbox[0]]
             bounding_polygon = Polygon(bbox)
 
